@@ -1,91 +1,300 @@
-version: "3.1"
+version: "3.0"
 
 nlu:
-- intent: greet
-  examples: |
-    - hey
-    - hello
-    - hi
-    - hello there
-    - good morning
-    - good evening
-    - moin
-    - hey there
-    - let's go
-    - hey dude
-    - goodmorning
-    - goodevening
-    - good afternoon
 
-- intent: goodbye
-  examples: |
-    - cu
-    - good by
-    - cee you later
-    - good night
-    - bye
-    - goodbye
-    - have a nice day
-    - see you around
-    - bye bye
-    - see you later
+# - intent: nlu_fallback
+#   examples: |
+#     - Quiero comer
+#     - askdjañsfj
+#     - ¿Cuánto es 2+2?
+#     - ¿Qué te apetece?
+#     - pepino
+#     - tomate
 
-- intent: affirm
+- intent: negative_response_sentimiento_conversacion
   examples: |
-    - yes
-    - y
-    - indeed
-    - of course
-    - that sounds good
-    - correct
+    - mal
+    - regular
+    - en peligro
+    - insegura
+    - no sé
+    - tengo miedo
+    - tengo mucho miedo
+    - rara
+    - sospechoso
+    - no me fío
+    - no confío
+    - hay un problema
+    - triste
+    - no estoy contenta
+    - decepcionada
+    - necesito ayuda
+    - creo que necesito ayuda
+    - a lo mejor necesito ayuda
+    - ayúdame
+    - tengo ansiedad
+    - tengo pánico
+    - confusión
+    - estoy confusa
+    - estoy confundida
+    - depresión
+    - odio
+    - vergüenza
+    - culpa
+    - nostalgia
+    - asombro
+    - me siento presionada
+    - tengo una mala sensación
+    - estoy preocupada
+    - estoy inquieta
+    - tengo tensión
+    - nerviosa
+    - auxilio
+
+- intent: positive_response_sentimiento_conversacion
+  examples: |
+    - todo bien
+    - bien
+    - no siento nada
+    - nada
+    - sin problema
+    - no hay ningún problema
+    - contenta
+    - alegre
+
+- intent: start
+  examples: |
+    - /start
+
+- intent: ofrecimiento
+  examples: |
+    - todo
+    - el mundo
+    - el universo
+    - un trabajo
+    - dinero
+    - viajar fuera de mi país
+    - ayudar a mi familia
+    - un matrimonio
+    - fugarnos
+    - huir
+    - salir del país
+    - diamantes
+    - fichas
+    - gemas
+    - tesoros
+    - recompensas
+    - puntos
+    - créditos
+    - monedas
+    - retos
+    - juegos
+    - criptomoneda
+    - tokens
+    - divisas digitales
+    - criptodivisas
+    - moneda electrónica
+    - dejar a mi familia
+    - jugar
+    - ayudar a mis hijos
+    - tener una vida mejor
+    - ganar más dinero
+    - un piso
+    - un apartamento
+    - trabajar de camarera
+    - trabajar cuidando ancianos
+    - bailarina
+    - bailarina exótica
+    - sesiones de fotografía
+    - formar parte de una agencia internacional de modelos
+    - servicios sexuales
+    - estudiar
+    - estudios
+    - formación
+    - formarme
+    - una vida mejor
+    - ayuda
+    - amor
+    - una relación sentimental
+    - una relación amorosa
+    - grabar vídeos
+    - ser modelo
+    - ser mi novio
+    - cuidar niños
+    - cuidar personas mayores
+    - sexo
+    - fotografías de contenido sexual
+    - trabajar en un club
+    - trabajar en un salón de pedicura
+    - trabajar en un salón de uñas
+    - trabajar en un salón de manicura
+    - escaparnos
+    - irnos juntos
+    - ser mi marido
+    - boda
+    - casamiento
+    - emigrar
+    - nupcias
+    - enriquecerme
+    - departamento
+    - ser mesera
+    - camarera
+    - ser artista de baile y danzarina
+    - favores eróticos
+    - servicios íntimos
+    - futuro prometedor
+    - auxilio
+    - un romance
+    - un noviazgo
+    - ejercer el modelaje
+    - trabajar como niñera
+    - trabajar como asistenta
+    - erotismo
+    - fotografía íntima
+    - laborar en un establecimiento nocturno
+    - laborar en un pub
+    - laborar en una discoteca
+    - laborar en un antro
+    - trabajar en estética
+    - partir juntos
+    - edecan
+    - edecanes
+    - star edecanes
+    - ser dama de compañía
+    - ser digitadora
+    - servicio de transmisión de imagen en vivo
+    - labores en streaming
+    - lana
+    - plata
+    - guita
+    - mango
+    - varo
+    - chavos
+    - cuartos
+    - gamba
+    - sol
+    - solcito
+    - mango
+    - varo
+    - fula
+    - billete
+    - feria
+    - lucas
+    - cheles
+    - guelga
+    - cuartos
+    - cuc
 
 - intent: deny
   examples: |
     - no
-    - n
-    - never
-    - I don't think so
-    - don't like that
-    - no way
-    - not really
+    - que va
+    - para nada
+    - no creo
+    - siento que no
+    - yo diría que no
+    - ni de coña
+    - No, eso no es correcto
+    - No, no estoy de acuerdo
+    - No, eso no es así
+    - No, eso no es cierto
+    - No, eso no es verdad
+    - No, eso no es exacto
+    - No, definitivamente no
+    - No, en absoluto
+    - No, de ninguna manera
+    - No, no concuerdo en absoluto
+    - No, no estoy seguro de eso
+    - No, eso no suena bien
+    - No, no me parece correcto
+    - No, no creo eso
+    - No, eso no me parece válido
+    - No, eso no encaja con lo que sé
+    - No, eso no es lo que quiero
+    - No, no es lo que estoy buscando
+    - No, eso no es lo que necesito
+    - No, eso no es lo que esperaba
 
-- intent: mood_great
-  examples: |
-    - perfect
-    - great
-    - amazing
-    - feeling like a king
-    - wonderful
-    - I am feeling very good
-    - I am great
-    - I am amazing
-    - I am going to save the world
-    - super stoked
-    - extremely good
-    - so so perfect
-    - so good
-    - so perfect
 
-- intent: mood_unhappy
-  examples: |
-    - my day was horrible
-    - I am sad
-    - I don't feel very well
-    - I am disappointed
-    - super sad
-    - I'm so sad
-    - sad
-    - very sad
-    - unhappy
-    - not good
-    - not very good
-    - extremly sad
-    - so saad
-    - so sad
 
-- intent: bot_challenge
+- intent: affirm
   examples: |
-    - are you a bot?
-    - are you a human?
-    - am I talking to a bot?
-    - am I talking to a human?
+    - Si
+    - Sí, eso es correcto
+    - Estás en lo cierto
+    - Así es
+    - Estoy de acuerdo
+    - Exactamente
+    - Sin duda
+    - Por supuesto
+    - Indudablemente
+    - Es verdad
+    - Confirmo eso
+    - Afirmativo
+    - Ciertamente
+    - Claro que sí
+    - Efectivamente
+    - Estoy seguro de eso
+    - Seguramente
+    - Totalmente de acuerdo
+    - Sí, así es como es
+    - No hay duda al respecto
+    - Absolutamente
+
+- intent: response_sentimiento
+  examples: |
+    - No me fío
+    - No me fío del tío con el que estoy hablando
+    - No me fío del señor con el que estoy hablando
+    - No me fío del hombre con el que estoy hablando
+    - No me fío del caballero con el que estoy hablando
+    - No me fío del chico con el que estoy hablando
+    - No me fío del individuo con el que estoy hablando
+    - No me fío del amigo con el que estoy hablando
+    - No me fío del chamo con el que estoy hablando
+    - No me fío del parcero con el que estoy hablando
+    - No me fío del pana con el que estoy hablando
+    - No me fío del socio con el que estoy hablando
+    - No sé si confiar en el tipo con el que hablo
+    - Me piden fotos de mí desnuda
+    - me solicitan actividades sexuales
+    - me piden material sexual
+    - un hombre quiere verme
+    - quieren verme a escondidas
+    - dicen que no le diga nada a mis padres
+    - están amenazando a mi familia
+    - me piden dinero
+    - me voy a escapar de casa
+    - me piden mi número de teléfono
+    - me piden mi dirección
+    - me piden el número de tarjeta de crédito
+    - me persiguen
+    - me siguen
+    - me piden mi pasaporte
+    - me amenazan
+    - me dicen que me harán daño
+    - no lo sé
+    - me piden dinero
+    - me están extorsionando
+    - me están pegando
+    - tengo una mala sensación
+    - no me fio de lo que me están contando
+    - creo que es mentira lo que me dicen
+    - me ofrecen demasiado para ser verdad
+    - irreal
+    - parece mentira lo que me dicen
+    - engaño, invención
+    - no creo lo que me dicen
+    - parece un cuento
+    - parece un bolazo
+    - parece un embuste
+    - es un choro
+
+- regex: number
+  examples: |
+    - \d{1,2}
+
+- intent: age_response
+  examples: |
+    - Tengo [14](number) años
+    - Mi edad es [54](number) años

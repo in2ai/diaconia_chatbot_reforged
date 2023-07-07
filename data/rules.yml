@@ -1,13 +1,63 @@
-version: "3.1"
+version: "3.0"
 
 rules:
 
-- rule: Say goodbye anytime the user says goodbye
+- rule: Preguntar repetición cuando no se entiende
   steps:
-  - intent: goodbye
-  - action: utter_goodbye
+  - intent: nlu_fallback  
+  - action: utter_pide_repetir 
 
-- rule: Say 'I am a bot' anytime the user challenges
+
+- rule: Comienza la conversación
   steps:
-  - intent: bot_challenge
-  - action: utter_iamabot
+  - intent: start
+  - action: utter_start
+  - action: utter_sentimiento_conversacion
+
+- rule: Response a la pregunta sentimiento_conversacion de manera positiva
+  steps:
+  - intent: positive_response_sentimiento_conversacion
+  - action: utter_positive_response_sentimiento_conversacion
+
+- rule: Response a la pregunta sentimiento_conversacion de manera negativa
+  steps:
+  - intent: negative_response_sentimiento_conversacion
+  - action: utter_negative_response_sentimiento_conversacion
+  
+- rule: Response a la pregunta sentimiento_conversacion de manera negativa
+  steps:
+  - action: utter_negative_response_sentimiento_conversacion
+  - intent: response_sentimiento
+  - action: utter_response_sentimiento
+
+- rule: Ofrecimiento positivo
+  steps:
+  - action: utter_response_sentimiento
+  - intent: affirm
+  - action: utter_affirm_ofrecimientos
+
+- rule: Ofrecimiento negativo
+  steps:
+  - action: utter_response_sentimiento
+  - intent: deny
+  - action: utter_ask_age
+
+- rule: Ofrecimientos
+  steps:
+  - action: utter_affirm_ofrecimientos
+  - intent: ofrecimiento
+  - action: utter_ask_age
+
+- rule: pregunta_edad_negativo
+  steps:
+  - action: utter_ask_age
+  - intent: deny
+  - action: utter_finish
+
+- rule: pregunta_edad_positivo
+  steps:
+  - action: utter_ask_age
+  - intent: affirm
+  - action: utter_finish
+
+

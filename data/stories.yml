@@ -1,30 +1,41 @@
-version: "3.1"
+version: "3.0"
 
 stories:
+  # - story: Linea_1
+  #   steps:
+  #   - intent: start
+  #   - action: utter_start
+  #   - action: utter_sentimiento_conversacion # Termina la inicialización: Respuesta positiva
+  #   - intent: positive_response_sentimiento_conversacion
+  #   - action: utter_positive_response_sentimiento_conversacion
+  
+  # - story: Linea_2_1
+  #   steps:
+  #   - intent: start
+  #   - action: utter_start
+  #   - action: utter_sentimiento_conversacion # Termina la inicialización: Respuesta regativa
+  #   - intent: negative_response_sentimiento_conversacion
+  #   - action: utter_negative_response_sentimiento_conversacion
+  #   - intent: response_sentimiento
+  #   - action: utter_response_sentimiento # Response ofrecimientos positivos
+  #   - intent: affirm
+  #   - action: utter_affirm_ofrecimientos
+  #   - intent: ofrecimiento
 
-- story: happy path
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_great
-  - action: utter_happy
-
-- story: sad path 1
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
-  - intent: affirm
-  - action: utter_happy
-
-- story: sad path 2
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
-  - intent: deny
-  - action: utter_goodbye
+  # - story: Linea_2_2
+  #   steps:
+  #   - intent: start
+  #   - action: utter_start
+  #   - action: utter_sentimiento_conversacion # Termina la inicialización: Respuesta negativa
+  #   - intent: negative_response_sentimiento_conversacion
+  #   - action: utter_negative_response_sentimiento_conversacion
+  #   - intent: response_sentimiento
+  #   - action: utter_response_sentimiento # Response ofrecimientos negativos
+  #   - intent: deny
+  #   - action: age_form
+  #   - active_loop: age_form
+  #   - action: age_form
+  #   - active_loop: null
+  #   - slot_was_set:
+  #     - requested_slot: null
+  #   - action: age_registration

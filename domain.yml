@@ -1,34 +1,57 @@
-version: "3.1"
-
-intents:
-  - greet
-  - goodbye
-  - affirm
-  - deny
-  - mood_great
-  - mood_unhappy
-  - bot_challenge
-
-responses:
-  utter_greet:
-  - text: "Hey! How are you?"
-
-  utter_cheer_up:
-  - text: "Here is something to cheer you up:"
-    image: "https://i.imgur.com/nGF1K8f.jpg"
-
-  utter_did_that_help:
-  - text: "Did that help you?"
-
-  utter_happy:
-  - text: "Great, carry on!"
-
-  utter_goodbye:
-  - text: "Bye"
-
-  utter_iamabot:
-  - text: "I am a bot, powered by Rasa."
+version: "3.0"
 
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
+
+intents:
+  - start
+  - negative_response_sentimiento_conversacion
+  - positive_response_sentimiento_conversacion
+  - ofrecimiento
+  - deny
+  - affirm
+  - response_sentimiento
+  - age_response
+
+entities:
+  - number
+
+slots:
+  age:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: number
+        conditions:
+          - active_loop: risk_form
+            requested_slot: age
+
+forms:
+  age_form:
+    required_slots:
+      - age
+
+responses:
+  utter_start:
+  - text: "¡Hola!, soy tu asistente RAIST. He detectado algunos indicios de peligro en tu conversación. Te voy a hacer algunas preguntas para que evaluemos si la conversación que estás manteniendo puede estarte poniendo en riesgo."
+  utter_sentimiento_conversacion:
+  - text: "¿Cómo te sientes en la conversación que estás teniendo?"
+  utter_positive_response_sentimiento_conversacion:
+  - text: "Si no te sientes mal me alegro. Recuerta que estoy aquí para ti, siempre pueder usar el comando /start para volver a comenzar la conversación conmigo. ¡Hasta pronto!"
+  utter_negative_response_sentimiento_conversacion:
+  - text: "¿Qué te hace sentir así?"
+  utter_response_sentimiento:
+  - text: "¿La persona con la que hablas te está ofreciendo algo?"
+  utter_affirm_ofrecimientos:
+  - text: "¿Qué te está ofreciendo?"
+  utter_ask_age:
+  - text: "¿Eres menor de 18 años?"
+  utter_finish:
+  - text: "Aquí se acaba la demo"
+  utter_pide_repetir:
+  - text: "Perdona, no he entendido lo que me has dicho, ¿podrías repetir lo que me has dicho de otra forma?"
+
+actions:
+  - utter_ask_age
