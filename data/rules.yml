@@ -65,6 +65,20 @@ rules:
   - action: utter_que_quieres_saber
   - intent: uno
   - action: utter_saber_uno
+  - action: utter_ask_saber_2
+
+- rule: affirm_saber_2_despues_1
+  steps:
+  - action: utter_ask_saber_2
+  - intent: affirm
+  - action: utter_saber_dos
+  - action: utter_preguntas_viaje
+
+- rule: deny_saber_2_despues_1
+  steps:
+  - action: utter_ask_saber_2
+  - intent: deny
+  - action: utter_saber_tres
 
 - rule: Que_quiere_saber_2
   steps:
@@ -100,6 +114,7 @@ rules:
   steps:
   - action: utter_preguntas_viaje
   - intent: deny
+  - action: utter_saber_tres
   - action: utter_finish
 
 

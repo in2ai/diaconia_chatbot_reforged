@@ -237,7 +237,7 @@ responses:
     - payload: /tres
       title: "3"
     button_type: vertical
-    text: "A continuación, tienes 3 opciones, por favor elige una opción.
+    text: "A continuación, tienes 3 opciones, por favor elige una opción./n
           1.- ¿Quieres conocer qué es la trata y cómo te puede afectar?
           2.- ¿Quieres que hablemos de si en tu caso existe algún riesgo de trata?
           3.- ¿Quieres pedir ayuda porque crees que te encuentras en peligro?"
@@ -265,7 +265,8 @@ responses:
   utter_preguntas_viaje:
   - text: "¿Vas   a   viajar   próximamente   o   has   viajado   fuera   de   tu   país   de   origen
     porque te han hecho una oferta de trabajo?"
-
+  utter_ask_saber_2:
+  - text: "¿Quieres que hablemos de si en tu caso existe algún riesgo de trata?"
   utter_ask_pagar_para_viajar:
   - text: "¿Has tenido que pagar algo para poder viajar?"
   utter_ask_pagar_tu_billete:
