@@ -1,3 +1,4 @@
 .vscode
 .rasa
 models
+credentials.yml
