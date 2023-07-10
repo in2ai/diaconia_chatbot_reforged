@@ -12,27 +12,203 @@ intents:
   - deny
   - affirm
   - response_sentimiento
-  - age_response
-
-entities:
-  - number
-
-slots:
-  age:
-    type: text
-    influence_conversation: true
-    mappings:
-      - type: from_entity
-        entity: number
-        conditions:
-          - active_loop: risk_form
-            requested_slot: age
+  - uno
+  - dos
+  - tres
 
 forms:
-  age_form:
+  viaje_form:
     required_slots:
-      - age
+      - pagar_para_viajar
+      - pagar_tu_billete
+      - pagar_alojamiento
+      - preocupacion_dinero
+      - ganar_dinero
+      - fotos_intimas
+      - pregunta_pasaporte
+      - pasaporte_falso
+      - espera_alguien
+      - espera_conocida
+      - fiabilidad_espera
 
+slots:
+  pagar_para_viajar:
+    type: bool
+    influence_conversation: true
+    mappings:
+      - type: from_intent
+        value: true
+        intent: affirm
+        conditions:
+          - active_loop: viaje_form
+            requested_slot: pagar_para_viajar
+      - type: from_intent
+        value: false
+        intent: deny
+        conditions:
+          - active_loop: viaje_form
+            requested_slot: pagar_para_viajar
+  pagar_tu_billete:
+    type: bool
+    influence_conversation: true
+    mappings:
+      - type: from_intent
+        value: true
+        intent: affirm
+        conditions:
+          - active_loop: viaje_form
+            requested_slot: pagar_tu_billete
+      - type: from_intent
+        value: false
+        intent: deny
+        conditions:
+          - active_loop: viaje_form
+            requested_slot: pagar_tu_billete
+  pagar_alojamiento:
+    type: bool
+    influence_conversation: true
+    mappings:
+      - type: from_intent
+        value: true
+        intent: affirm
+        conditions:
+          - active_loop: viaje_form
+            requested_slot: pagar_alojamiento
+      - type: from_intent
+        value: false
+        intent: deny
+        conditions:
+          - active_loop: viaje_form
+            requested_slot: pagar_alojamiento
+  preocupacion_dinero:
+    type: bool
+    influence_conversation: true
+    mappings:
+      - type: from_intent
+        value: true
+        intent: affirm
+        conditions:
+          - active_loop: viaje_form
+            requested_slot: preocupacion_dinero
+      - type: from_intent
+        value: false
+        intent: deny
+        conditions:
+          - active_loop: viaje_form
+            requested_slot: preocupacion_dinero
+  ganar_dinero:
+    type: bool
+    influence_conversation: true
+    mappings:
+      - type: from_intent
+        value: true
+        intent: affirm
+        conditions:
+          - active_loop: viaje_form
+            requested_slot: ganar_dinero
+      - type: from_intent
+        value: false
+        intent: deny
+        conditions:
+          - active_loop: viaje_form
+            requested_slot: ganar_dinero
+  fotos_intimas:
+    type: bool
+    influence_conversation: true
+    mappings:
+      - type: from_intent
+        value: true
+        intent: affirm
+        conditions:
+          - active_loop: viaje_form
+            requested_slot: fotos_intimas
+      - type: from_intent
+        value: false
+        intent: deny
+        conditions:
+          - active_loop: viaje_form
+            requested_slot: fotos_intimas
+  pregunta_pasaporte:
+    type: bool
+    influence_conversation: true
+    mappings:
+      - type: from_intent
+        value: true
+        intent: affirm
+        conditions:
+          - active_loop: viaje_form
+            requested_slot: pregunta_pasaporte
+      - type: from_intent
+        value: false
+        intent: deny
+        conditions:
+          - active_loop: viaje_form
+            requested_slot: pregunta_pasaporte
+  pasaporte_falso:
+    type: bool
+    influence_conversation: true
+    mappings:
+      - type: from_intent
+        value: true
+        intent: affirm
+        conditions:
+          - active_loop: viaje_form
+            requested_slot: pasaporte_falso
+      - type: from_intent
+        value: false
+        intent: deny
+        conditions:
+          - active_loop: viaje_form
+            requested_slot: pasaporte_falso
+  espera_alguien:
+    type: bool
+    influence_conversation: true
+    mappings:
+      - type: from_intent
+        value: true
+        intent: affirm
+        conditions:
+          - active_loop: viaje_form
+            requested_slot: espera_alguien
+      - type: from_intent
+        value: false
+        intent: deny
+        conditions:
+          - active_loop: viaje_form
+            requested_slot: espera_alguien
+  espera_conocida:
+    type: bool
+    influence_conversation: true
+    mappings:
+      - type: from_intent
+        value: true
+        intent: affirm
+        conditions:
+          - active_loop: viaje_form
+            requested_slot: espera_conocida
+      - type: from_intent
+        value: false
+        intent: deny
+        conditions:
+          - active_loop: viaje_form
+            requested_slot: espera_conocida
+  fiabilidad_espera:
+    type: bool
+    influence_conversation: true
+    mappings:
+      - type: from_intent
+        value: true
+        intent: affirm
+        conditions:
+          - active_loop: viaje_form
+            requested_slot: fiabilidad_espera
+      - type: from_intent
+        value: false
+        intent: deny
+        conditions:
+          - active_loop: viaje_form
+            requested_slot: fiabilidad_espera
+  
 responses:
   utter_start:
   - text: "¡Hola!, soy tu asistente RAIST. He detectado algunos indicios de peligro en tu conversación. Te voy a hacer algunas preguntas para que evaluemos si la conversación que estás manteniendo puede estarte poniendo en riesgo."
@@ -52,6 +228,74 @@ responses:
   - text: "Aquí se acaba la demo"
   utter_pide_repetir:
   - text: "Perdona, no he entendido lo que me has dicho, ¿podrías repetir lo que me has dicho de otra forma?"
+  utter_que_quieres_saber:
+  - buttons:
+    - payload: /uno
+      title: "1"
+    - payload: /dos
+      title: "2"
+    - payload: /tres
+      title: "3"
+    button_type: vertical
+    text: "A continuación, tienes 3 opciones, por favor elige una opción.
+          1.- ¿Quieres conocer qué es la trata y cómo te puede afectar?
+          2.- ¿Quieres que hablemos de si en tu caso existe algún riesgo de trata?
+          3.- ¿Quieres pedir ayuda porque crees que te encuentras en peligro?"
+  
+  utter_saber_uno:
+  - text: "Es un delito que puede afectar a cualquiera persona. Generalmente, en la
+    trata  una  persona  capta  a  otra  engañándola  con   el  fin   de  explotarla.   Por
+    ejemplo: Una persona te puede estar ofreciendo una oferta de trabajo que
+    te puede interesar, cuando en realidad las condiciones del trabajo no son
+    ciertas   y   busca   quedarse   con   tus   beneficios   económicos   y   así   poder
+    explotarte.   La   explotación   puede   ser   sexual   incluyendo   pornografía,
+    explotación laboral, explotación para la mendicidad, para cometer delitos y
+    otras formas."
+
+  utter_saber_dos:
+  - text: "Vale, ahora te haré una serie de preguntas con respuestas de si y no para
+            entender mejor tu situación."
+  
+  utter_saber_tres:
+  - text: "Si crees que necesitas ayuda te recomiendo llamar el número de Diaconía,
+          que es el (introducir telégono). Espero haberte sido de ayuda y que estés bien.
+          Recuerda que siempre puedes usar /start para comenzar de nuevo una conversación
+          conmigo."
+
+  utter_preguntas_viaje:
+  - text: "¿Vas   a   viajar   próximamente   o   has   viajado   fuera   de   tu   país   de   origen
+    porque te han hecho una oferta de trabajo?"
+
+  utter_ask_pagar_para_viajar:
+  - text: "¿Has tenido que pagar algo para poder viajar?"
+  utter_ask_pagar_tu_billete:
+  - text: "¿Has pagado por tu billete de avión?"
+  utter_ask_pagar_alojamiento:
+  - text: "¿Vas a pagar por tu alojamiento?"
+  utter_ask_preocupacion_dinero:
+  - text: "¿Te han dicho en algún momento que no te preocupes por el dinero?"
+  utter_ask_ganar_dinero:
+  - text: "¿Te han dicho que vas a ganar una buena cantidad de dinero?"
+  utter_ask_fotos_intimas:
+  - text: "En  la trata, la persona que intenta captar a otra a veces ha mantenido
+          un contacto habitual con quien quiere explotar. Eso puede hacer creer a la
+          persona que puede confiar en ella. Sin embargo, presta atención a si una
+          persona que no conoces te está proponiendo algo que parece demasiado
+          bueno   para   ser   verdad.   Presta   atención   a   si   te   dice   que   no   debes
+          preocuparte de nada y que se hará cargo de todo o que pagará todo o casi
+          todo. Si crees que puedes estar siendo captada o te genera dudas, puedes
+          ponerte en contacto de manera confidencial y anónima en el tlf.... De todas formas, sigamos con las preguntas.
+          ¿Te han pedido fotografías con contenido íntimo? (Por ejemplo, en ropa interior?"
+  utter_ask_pregunta_pasaporte:
+  - text: "¿Te han preguntado si tienes pasaporte?"
+  utter_ask_pasaporte_falso:
+  - text: "¿Te han ofrecido un pasaporte falso?"
+  utter_ask_espera_alguien:
+  - text: "¿A tu llegada te va a venir a buscar alguien?"
+  utter_ask_espera_conocida:
+  - text: "¿Conoces personalmente a la persona que viene a buscarte?"
+  utter_ask_fiabilidad_espera:
+  - text: "¿Estás seguro de que puedes fiarte de esta persona?"
 
 actions:
-  - utter_ask_age
+  - utter_finish

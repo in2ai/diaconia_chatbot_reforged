@@ -52,12 +52,54 @@ rules:
   steps:
   - action: utter_ask_age
   - intent: deny
-  - action: utter_finish
+  - action: utter_que_quieres_saber
 
 - rule: pregunta_edad_positivo
   steps:
   - action: utter_ask_age
   - intent: affirm
+  - action: utter_que_quieres_saber
+
+- rule: Que_quiere_saber_1
+  steps:
+  - action: utter_que_quieres_saber
+  - intent: uno
+  - action: utter_saber_uno
+
+- rule: Que_quiere_saber_2
+  steps:
+  - action: utter_que_quieres_saber
+  - intent: dos
+  - action: utter_saber_dos
+  - action: utter_preguntas_viaje
+
+- rule: Que_quiere_saber_3
+  steps:
+  - action: utter_que_quieres_saber
+  - intent: tres
+  - action: utter_saber_tres
+
+- rule: si_va_a_viajar
+  steps:
+  - action: utter_preguntas_viaje
+  - intent: affirm
+  - action: viaje_form
+  - active_loop: viaje_form
+
+- rule: Submit viaje form
+  condition:
+  - active_loop: viaje_form
+  steps: 
+  - action: viaje_form
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: utter_finish
+
+- rule: no_va_a_viajar
+  steps:
+  - action: utter_preguntas_viaje
+  - intent: deny
   - action: utter_finish
 
 

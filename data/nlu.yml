@@ -11,6 +11,21 @@ nlu:
 #     - pepino
 #     - tomate
 
+- intent: uno
+  examples: |
+    - uno
+    - 1
+
+- intent: dos
+  examples: |
+    - dos
+    - 2
+
+- intent: tres
+  examples: |
+    - tres
+    - 3
+
 - intent: negative_response_sentimiento_conversacion
   examples: |
     - mal
@@ -18,6 +33,7 @@ nlu:
     - en peligro
     - insegura
     - no sé
+    - no se
     - tengo miedo
     - tengo mucho miedo
     - rara
@@ -255,7 +271,7 @@ nlu:
     - No me fío del parcero con el que estoy hablando
     - No me fío del pana con el que estoy hablando
     - No me fío del socio con el que estoy hablando
-    - No sé si confiar en el tipo con el que hablo
+    - Creo que no debo confiar en el tipo con el que hablo
     - Me piden fotos de mí desnuda
     - me solicitan actividades sexuales
     - me piden material sexual
@@ -289,12 +305,3 @@ nlu:
     - parece un bolazo
     - parece un embuste
     - es un choro
-
-- regex: number
-  examples: |
-    - \d{1,2}
-
-- intent: age_response
-  examples: |
-    - Tengo [14](number) años
-    - Mi edad es [54](number) años
