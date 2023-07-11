@@ -117,4 +117,6 @@ rules:
   - action: utter_saber_tres
   - action: utter_finish
 
-
+- rule: Fallback rule
+  steps:
+  - action: action_default_fallback

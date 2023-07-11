@@ -297,6 +297,8 @@ responses:
   - text: "¿Conoces personalmente a la persona que viene a buscarte?"
   utter_ask_fiabilidad_espera:
   - text: "¿Estás seguro de que puedes fiarte de esta persona?"
+  utter_default_fallback:
+  - text: Lo siento, no he entendido lo que me has dicho. ¿Podrías responder de otra forma a la pregunta?
 
 actions:
-  - utter_finish
+  - utter_finishpude entender tu solicitud
