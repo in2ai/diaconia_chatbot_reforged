@@ -2,14 +2,14 @@ version: "3.0"
 
 nlu:
 
-# - intent: nlu_fallback
-#   examples: |
-#     - Quiero comer
-#     - askdjañsfj
-#     - ¿Cuánto es 2+2?
-#     - ¿Qué te apetece?
-#     - pepino
-#     - tomate
+- intent: nlu_fallback
+  examples: |
+    - Quiero comer
+    - askdjañsfj
+    - ¿Cuánto es 2+2?
+    - ¿Qué te apetece?
+    - pepino
+    - tomate
 
 - intent: uno
   examples: |
@@ -26,7 +26,7 @@ nlu:
     - tres
     - 3
 
-- intent: negative_response_sentimiento_conversacion
+- intent: negative_response_sentimiento
   examples: |
     - mal
     - regular
@@ -67,7 +67,7 @@ nlu:
     - nerviosa
     - auxilio
 
-- intent: positive_response_sentimiento_conversacion
+- intent: positive_response_sentimiento
   examples: |
     - todo bien
     - bien

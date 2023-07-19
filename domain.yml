@@ -6,8 +6,8 @@ session_config:
 
 intents:
   - start
-  - negative_response_sentimiento_conversacion
-  - positive_response_sentimiento_conversacion
+  - negative_response_sentimiento
+  - positive_response_sentimiento
   - ofrecimiento
   - deny
   - affirm
@@ -17,8 +17,28 @@ intents:
   - tres
 
 forms:
+  # Sentimiento form
+  sentimiento_form:
+    required_slots:
+      - como_te_sientes
+      - que_hace_sentirte_asi
+
+  
+  # Ofrecimiento form
+  ofrecimiento_form:
+    required_slots:
+      - ofreciendo_algo
+      - que_ofrece
+  
+  # Eres menor form
+  menor_form:
+    required_slots:
+      - pregunta_menor
+
+  # Viaje form
   viaje_form:
     required_slots:
+      - vas_a_viajar
       - pagar_para_viajar
       - pagar_tu_billete
       - pagar_alojamiento
@@ -30,199 +50,283 @@ forms:
       - espera_alguien
       - espera_conocida
       - fiabilidad_espera
+      - ofrecido_trabajo
+      - ofrecido_contrato
+      - visto_contrato
+      - demasiado_buena
+      - confias
+      - libertad_romper_contrato
+      - avance_dinero
+      - contenido_intimo
+      - contenido_desnudo
+      - datos_personales
 
 slots:
+  # Sentimiento form
+  como_te_sientes:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: sentimiento_form
+            requested_slot: como_te_sientes  
+
+  que_hace_sentirte_asi:
+    type: bool
+    influence_conversation: true
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: sentimiento_form
+            requested_slot: que_hace_sentirte_asi  
+
+  # Ofrecimiento form
+  ofreciendo_algo:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: ofrecimiento_form
+            requested_slot: ofreciendo_algo  
+
+  que_ofrece:
+    type: bool
+    influence_conversation: true
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: ofrecimiento_form
+            requested_slot: que_ofrece
+
+  # Mayor de edad form
+
+  pregunta_menor:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_text
+        value: true
+        conditions:
+          - active_loop: menor_form
+            requested_slot: pregunta_menor
+
+  # Viaje form
+  vas_a_viajar:
+    type: bool
+    influence_conversation: true
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: viaje_form
+            requested_slot: vas_a_viajar
+
+
   pagar_para_viajar:
     type: bool
     influence_conversation: true
     mappings:
-      - type: from_intent
-        value: true
-        intent: affirm
+      - type: from_text
         conditions:
           - active_loop: viaje_form
             requested_slot: pagar_para_viajar
-      - type: from_intent
-        value: false
-        intent: deny
-        conditions:
-          - active_loop: viaje_form
-            requested_slot: pagar_para_viajar
+
   pagar_tu_billete:
     type: bool
     influence_conversation: true
     mappings:
-      - type: from_intent
-        value: true
-        intent: affirm
+      - type: from_text
         conditions:
           - active_loop: viaje_form
             requested_slot: pagar_tu_billete
-      - type: from_intent
-        value: false
-        intent: deny
-        conditions:
-          - active_loop: viaje_form
-            requested_slot: pagar_tu_billete
+
   pagar_alojamiento:
     type: bool
     influence_conversation: true
     mappings:
-      - type: from_intent
-        value: true
-        intent: affirm
+      - type: from_text
         conditions:
           - active_loop: viaje_form
             requested_slot: pagar_alojamiento
-      - type: from_intent
-        value: false
-        intent: deny
-        conditions:
-          - active_loop: viaje_form
-            requested_slot: pagar_alojamiento
+
   preocupacion_dinero:
     type: bool
     influence_conversation: true
     mappings:
-      - type: from_intent
-        value: true
-        intent: affirm
+      - type: from_text
         conditions:
           - active_loop: viaje_form
             requested_slot: preocupacion_dinero
-      - type: from_intent
-        value: false
-        intent: deny
-        conditions:
-          - active_loop: viaje_form
-            requested_slot: preocupacion_dinero
+
   ganar_dinero:
     type: bool
     influence_conversation: true
     mappings:
-      - type: from_intent
-        value: true
-        intent: affirm
+      - type: from_text
         conditions:
           - active_loop: viaje_form
             requested_slot: ganar_dinero
-      - type: from_intent
-        value: false
-        intent: deny
-        conditions:
-          - active_loop: viaje_form
-            requested_slot: ganar_dinero
+
   fotos_intimas:
     type: bool
     influence_conversation: true
     mappings:
-      - type: from_intent
-        value: true
-        intent: affirm
+      - type: from_text
         conditions:
           - active_loop: viaje_form
             requested_slot: fotos_intimas
-      - type: from_intent
-        value: false
-        intent: deny
-        conditions:
-          - active_loop: viaje_form
-            requested_slot: fotos_intimas
+
   pregunta_pasaporte:
     type: bool
     influence_conversation: true
     mappings:
-      - type: from_intent
-        value: true
-        intent: affirm
+      - type: from_text
         conditions:
           - active_loop: viaje_form
             requested_slot: pregunta_pasaporte
-      - type: from_intent
-        value: false
-        intent: deny
-        conditions:
-          - active_loop: viaje_form
-            requested_slot: pregunta_pasaporte
+
   pasaporte_falso:
     type: bool
     influence_conversation: true
     mappings:
-      - type: from_intent
-        value: true
-        intent: affirm
+      - type: from_text
         conditions:
           - active_loop: viaje_form
             requested_slot: pasaporte_falso
-      - type: from_intent
-        value: false
-        intent: deny
-        conditions:
-          - active_loop: viaje_form
-            requested_slot: pasaporte_falso
+
   espera_alguien:
     type: bool
     influence_conversation: true
     mappings:
-      - type: from_intent
-        value: true
-        intent: affirm
+      - type: from_text
         conditions:
           - active_loop: viaje_form
             requested_slot: espera_alguien
-      - type: from_intent
-        value: false
-        intent: deny
-        conditions:
-          - active_loop: viaje_form
-            requested_slot: espera_alguien
+
   espera_conocida:
     type: bool
     influence_conversation: true
     mappings:
-      - type: from_intent
-        value: true
-        intent: affirm
+      - type: from_text
         conditions:
           - active_loop: viaje_form
             requested_slot: espera_conocida
-      - type: from_intent
-        value: false
-        intent: deny
-        conditions:
-          - active_loop: viaje_form
-            requested_slot: espera_conocida
+
   fiabilidad_espera:
     type: bool
     influence_conversation: true
     mappings:
-      - type: from_intent
-        value: true
-        intent: affirm
+      - type: from_text
         conditions:
           - active_loop: viaje_form
             requested_slot: fiabilidad_espera
-      - type: from_intent
-        value: false
-        intent: deny
+
+  # Contrato form
+  ofrecido_trabajo:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_text
         conditions:
           - active_loop: viaje_form
-            requested_slot: fiabilidad_espera
+            requested_slot: ofrecido_trabajo
+
+  ofrecido_contrato:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: viaje_form
+            requested_slot: ofrecido_contrato
+
+  visto_contrato:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: viaje_form
+            requested_slot: visto_contrato
+
+  demasiado_buena:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: viaje_form
+            requested_slot: demasiado_buena
+  
+  confias:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: viaje_form
+            requested_slot: confias
+  
+  libertad_romper_contrato:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: viaje_form
+            requested_slot: libertad_romper_contrato
+
+  avance_dinero:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: viaje_form
+            requested_slot: avance_dinero
+  
+  contenido_intimo:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: viaje_form
+            requested_slot: contenido_intimo
+  
+  contenido_desnudo:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: viaje_form
+            requested_slot: contenido_desnudo
+    
+  datos_personales:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: viaje_form
+            requested_slot: datos_personales
   
 responses:
   utter_start:
   - text: "¡Hola!, soy tu asistente RAIST. He detectado algunos indicios de peligro en tu conversación. Te voy a hacer algunas preguntas para que evaluemos si la conversación que estás manteniendo puede estarte poniendo en riesgo."
-  utter_sentimiento_conversacion:
+  utter_ask_como_te_sientes:
   - text: "¿Cómo te sientes en la conversación que estás teniendo?"
-  utter_positive_response_sentimiento_conversacion:
-  - text: "Si no te sientes mal me alegro. Recuerta que estoy aquí para ti, siempre pueder usar el comando /start para volver a comenzar la conversación conmigo. ¡Hasta pronto!"
-  utter_negative_response_sentimiento_conversacion:
+  # utter_positive_response_sentimiento_conversacion:
+  # - text: "Si no te sientes mal me alegro. Recuerta que estoy aquí para ti, siempre pueder usar el comando /start para volver a comenzar la conversación conmigo. ¡Hasta pronto!"
+  utter_ask_que_hace_sentirte_asi:
   - text: "¿Qué te hace sentir así?"
-  utter_response_sentimiento:
+  utter_ask_ofreciendo_algo:
   - text: "¿La persona con la que hablas te está ofreciendo algo?"
-  utter_affirm_ofrecimientos:
+  utter_ask_que_ofrece:
   - text: "¿Qué te está ofreciendo?"
-  utter_ask_age:
+  utter_ask_pregunta_menor:
   - text: "¿Eres menor de 18 años?"
   utter_finish:
   - text: "Aquí se acaba la demo"
@@ -262,7 +366,7 @@ responses:
           Recuerda que siempre puedes usar /start para comenzar de nuevo una conversación
           conmigo."
 
-  utter_preguntas_viaje:
+  utter_ask_vas_a_viajar:
   - text: "¿Vas   a   viajar   próximamente   o   has   viajado   fuera   de   tu   país   de   origen
     porque te han hecho una oferta de trabajo?"
   utter_ask_saber_2:
@@ -297,8 +401,55 @@ responses:
   - text: "¿Conoces personalmente a la persona que viene a buscarte?"
   utter_ask_fiabilidad_espera:
   - text: "¿Estás seguro de que puedes fiarte de esta persona?"
-  utter_default_fallback:
-  - text: Lo siento, no he entendido lo que me has dicho. ¿Podrías responder de otra forma a la pregunta?
+  utter_deactivate_sentimiento:
+  - text: "Perfecto, ya te voy conociendo mejor"
 
+  utter_ask_ofrecido_trabajo:
+  - text: "¿Te han ofrecido una oferta de trabajo en el país en el que te encuentras?"
+  utter_ask_ofrecido_contrato:
+  - text: "¿Te están ofreciendo un contrato de trabajo?"
+  utter_ask_visto_contrato:
+  - text: "¿Has visto algún contrato de trabajo?"
+  utter_ask_demasiado_buena:
+  - text: "¿Te parece que la oferta de trabajo es “demasiado” buena para ser real dada las condiciones que te ofrecen?"
+  utter_ask_confias:
+  - text: "¿Confías en que la persona que te está ofreciendo el trabajo va a mantener las condiciones que te propone? "
+  utter_ask_libertad_romper_contrato:
+  - text: "¿Tendrías libertad para romper la relación laboral cuando tú quisieras? "
+  utter_ask_avance_dinero:
+  - text: "¿Te han pedido que avances alguna cantidad de dinero?"
+  utter_ask_contenido_intimo:
+  - text: "¿Te han pedido que les envíes fotos de contenido íntimo?"
+  utter_ask_contenido_desnudo:
+  - text: "¿Te han pedido que envíes fotos o vídeos desnuda o parcialmente desnuda?"
+  utter_ask_datos_personales:
+  - text: "¿Se han interesado mucho por tu situación personal preguntándote datos muy personales que van más allá de la simple contratación laboral?"
+
+
+  utter_saber_si_riesgo_trata:
+  - buttons:
+    - payload: /affirm
+      title: "Si"
+    - payload: /denny
+      title: "No"
+    button_type: vertical
+    text: "¿Quieres que hablemos de si en tu caso existe algún riesgo de trata?"
+
+  utter_pedir_ayuda:
+  - buttons:
+    - payload: /affirm
+      title: "Si"
+    - payload: /denny
+      title: "No"
+    button_type: vertical
+    text: "¿Quieres pedir ayuda porque crees que te encuentras en peligro?"
+  
 actions:
-  - utter_finishpude entender tu solicitud
+  - action_delete_all_messages
+  - utter_finish
+  - validate_sentimiento_form
+  - action_restart
+  - validate_ofrecimiento_form
+  - validate_menor_form
+  - validate_viaje_form
+  # - validate_trabajo_form

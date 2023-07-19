@@ -2,121 +2,240 @@ version: "3.0"
 
 rules:
 
-- rule: Preguntar repetición cuando no se entiende
-  steps:
-  - intent: nlu_fallback  
-  - action: utter_pide_repetir 
-
-
-- rule: Comienza la conversación
+- rule: Activate sentimiento form
   steps:
   - intent: start
   - action: utter_start
-  - action: utter_sentimiento_conversacion
+  - action: sentimiento_form
+  - active_loop: sentimiento_form
 
-- rule: Response a la pregunta sentimiento_conversacion de manera positiva
-  steps:
-  - intent: positive_response_sentimiento_conversacion
-  - action: utter_positive_response_sentimiento_conversacion
-
-- rule: Response a la pregunta sentimiento_conversacion de manera negativa
-  steps:
-  - intent: negative_response_sentimiento_conversacion
-  - action: utter_negative_response_sentimiento_conversacion
-  
-- rule: Response a la pregunta sentimiento_conversacion de manera negativa
-  steps:
-  - action: utter_negative_response_sentimiento_conversacion
-  - intent: response_sentimiento
-  - action: utter_response_sentimiento
-
-- rule: Ofrecimiento positivo
-  steps:
-  - action: utter_response_sentimiento
-  - intent: affirm
-  - action: utter_affirm_ofrecimientos
-
-- rule: Ofrecimiento negativo
-  steps:
-  - action: utter_response_sentimiento
-  - intent: deny
-  - action: utter_ask_age
-
-- rule: Ofrecimientos
-  steps:
-  - action: utter_affirm_ofrecimientos
-  - intent: ofrecimiento
-  - action: utter_ask_age
-
-- rule: pregunta_edad_negativo
-  steps:
-  - action: utter_ask_age
-  - intent: deny
-  - action: utter_que_quieres_saber
-
-- rule: pregunta_edad_positivo
-  steps:
-  - action: utter_ask_age
-  - intent: affirm
-  - action: utter_que_quieres_saber
-
-- rule: Que_quiere_saber_1
-  steps:
-  - action: utter_que_quieres_saber
-  - intent: uno
-  - action: utter_saber_uno
-  - action: utter_ask_saber_2
-
-- rule: affirm_saber_2_despues_1
-  steps:
-  - action: utter_ask_saber_2
-  - intent: affirm
-  - action: utter_saber_dos
-  - action: utter_preguntas_viaje
-
-- rule: deny_saber_2_despues_1
-  steps:
-  - action: utter_ask_saber_2
-  - intent: deny
-  - action: utter_saber_tres
-
-- rule: Que_quiere_saber_2
-  steps:
-  - action: utter_que_quieres_saber
-  - intent: dos
-  - action: utter_saber_dos
-  - action: utter_preguntas_viaje
-
-- rule: Que_quiere_saber_3
-  steps:
-  - action: utter_que_quieres_saber
-  - intent: tres
-  - action: utter_saber_tres
-
-- rule: si_va_a_viajar
-  steps:
-  - action: utter_preguntas_viaje
-  - intent: affirm
-  - action: viaje_form
-  - active_loop: viaje_form
-
-- rule: Submit viaje form
+- rule: Deactivate sentimiento form
   condition:
-  - active_loop: viaje_form
-  steps: 
-  - action: viaje_form
+  - slot_was_set:
+    - que_hace_sentirte_asi: false
+  steps:
+  - action: sentimiento_form
   - active_loop: null
   - slot_was_set:
     - requested_slot: null
   - action: utter_finish
+  - action: action_delete_all_messages
+  - action: action_restart
 
-- rule: no_va_a_viajar
+- rule: Activate ofrecimiento_form
+  condition:
+    - slot_was_set:
+      - que_hace_sentirte_asi: true
   steps:
-  - action: utter_preguntas_viaje
+  - action: sentimiento_form
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: ofrecimiento_form
+  - active_loop: ofrecimiento_form
+
+- rule: Activate menor_form
+  condition:
+    - slot_was_set:
+      - que_ofrece: true
+  steps:
+  - action: ofrecimiento_form
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: menor_form
+  - active_loop: menor_form
+
+- rule: Que quieres saber
+  condition:
+    - slot_was_set:
+      - pregunta_menor: true
+  steps:
+  - action: menor_form
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: utter_que_quieres_saber
+
+- rule: quiere saber uno
+  steps:
+  - action: utter_que_quieres_saber
+  - intent: uno
+  - action: utter_saber_uno
+  - action: utter_saber_si_riesgo_trata
+
+- rule: quiere saber si riesgo
+  steps:
+  - action: utter_saber_si_riesgo_trata
+  - intent: affirm
+  - action: viaje_form
+  - active_loop: viaje_form
+  - action: viaje_form
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+
+  # - action: trabajo_form
+  # - active_loop: trabajo_form
+  # - action: trabajo_form
+  # - active_loop: null
+  # - slot_was_set:
+  #   - requested_slot: null
+
+  
+  - action: utter_pedir_ayuda
+  
+
+- rule: no quiere saber si riesgo
+  steps:
+  - action: utter_saber_si_riesgo_trata
   - intent: deny
+  - action: utter_pedir_ayuda
+
+- rule: no quiere pedir ayuda
+  steps:
+  - action: utter_pedir_ayuda
+  - intent: deny
+  - action: utter_finish
+
+- rule: quiere pedir ayuda
+  steps:
+  - action: utter_pedir_ayuda
+  - intent: affirm
+  - action: utter_saber_tres
+
+- rule: quiere saber dos
+  steps:
+  - action: utter_que_quieres_saber
+  - intent: dos
+  - action: viaje_form
+  - active_loop: viaje_form
+  - action: viaje_form
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+
+- rule: quiere saber tres
+  steps:
+  - action: utter_que_quieres_saber
+  - intent: tres
   - action: utter_saber_tres
   - action: utter_finish
 
-- rule: Fallback rule
-  steps:
-  - action: action_default_fallback
+
+
+
+# - rule: Comienza la conversación
+#   steps:
+#   - intent: start
+#   - action: utter_start
+#   - action: utter_sentimiento_conversacion
+
+# - rule: intent a la pregunta sentimiento_conversacion de manera positiva
+#   steps:
+#   - action: utter_sentimiento_conversacion
+#   - intent: positive_response_sentimiento_conversacion
+#   - action: utter_positive_response_sentimiento_conversacion
+
+# - rule: Response a la pregunta sentimiento_conversacion de manera negativa
+#   steps:
+#   - action: utter_sentimiento_conversacion
+#   - intent: negative_response_sentimiento_conversacion
+#   - action: utter_negative_response_sentimiento_conversacion
+  
+# - rule: Response a la pregunta sentimiento_conversacion de manera negativa
+#   steps:
+#   - action: utter_negative_response_sentimiento_conversacion
+#   - intent: response_sentimiento
+#   - action: utter_response_sentimiento
+
+# - rule: Ofrecimiento positivo
+#   steps:
+#   - action: utter_response_sentimiento
+#   - intent: affirm
+#   - action: utter_affirm_ofrecimientos
+
+# - rule: Ofrecimiento negativo
+#   steps:
+#   - action: utter_intent_sentimiento
+#   - intent: deny
+#   - action: utter_ask_age
+
+# - rule: Ofrecimientos
+#   steps:
+#   - action: utter_affirm_ofrecimientos
+#   - intent: ofrecimiento
+#   - action: utter_ask_age
+
+# - rule: pregunta_edad_negativo
+#   steps:
+#   - action: utter_ask_age
+#   - intent: deny
+#   - action: utter_que_quieres_saber
+
+# - rule: pregunta_edad_positivo
+#   steps:
+#   - action: utter_ask_age
+#   - intent: affirm
+#   - action: utter_que_quieres_saber
+
+# - rule: Que_quiere_saber_1
+#   steps:
+#   - action: utter_que_quieres_saber
+#   - intent: uno
+#   - action: utter_saber_uno
+#   - action: utter_ask_saber_2
+
+# - rule: affirm_saber_2_despues_1
+#   steps:
+#   - action: utter_ask_saber_2
+#   - intent: affirm
+#   - action: utter_saber_dos
+#   - action: utter_preguntas_viaje
+
+# - rule: deny_saber_2_despues_1
+#   steps:
+#   - action: utter_ask_saber_2
+#   - intent: deny
+#   - action: utter_saber_tres
+
+# - rule: Que_quiere_saber_2
+#   steps:
+#   - action: utter_que_quieres_saber
+#   - intent: dos
+#   - action: utter_saber_dos
+#   - action: utter_preguntas_viaje
+
+# - rule: Que_quiere_saber_3
+#   steps:
+#   - action: utter_que_quieres_saber
+#   - intent: tres
+#   - action: utter_saber_tres
+
+# - rule: si_va_a_viajar
+#   steps:
+#   - action: utter_preguntas_viaje
+#   - intent: affirm
+#   - action: viaje_form
+#   - active_loop: viaje_form
+
+# - rule: Submit viaje form
+#   condition:
+#   - active_loop: viaje_form
+#   steps: 
+#   - action: viaje_form
+#   - active_loop: null
+#   - slot_was_set:
+#     - requested_slot: null
+#   - action: utter_finish
+
+# - rule: no_va_a_viajar
+#   steps:
+#   - action: utter_preguntas_viaje
+#   - intent: deny
+#   - action: utter_saber_tres
+#   - action: utter_finish
+
+# - rule: Fallback rule
+#   steps:
+#   - action: action_fallback
